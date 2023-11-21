@@ -1,0 +1,91 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: manufacturing_system
+  tags:
+    - events
+spec:
+  owner: user1
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: manufacturing_database
+  description: "Event Data"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
+spec:
+  type: database
+  owner: user1
+  system: manufacturing_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: manufacturing_events_s3
+  description: "manufacturing events S3 Bucket"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
+spec:
+  type: storage
+  owner: user1
+  system: manufacturing_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: manufacturing_events_api
+  description: "Get manufacturing Events API"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
+spec:
+  type: grpc
+  lifecycle: production
+  owner: user1
+  system: manufacturing_system
+  definition: |
+    syntax = "proto3";
+    package myorg.mygrpcapi;
+    message MyRequest {
+      string query = 1;
+    }
+    message MyResponse {
+      string result = 1;
+    }
+    service MyGrpcApi {
+      rpc MyMethod (MyRequest) returns (MyResponse);
+    }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: manufacturing_backend
+  description: "manufacturing Events Backend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user1
+  system: manufacturing_system
+  dependsOn:
+    - resource:manufacturing_database
+    - resource:manufacturing_events_s3
+  providesApis:
+    - events_api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: manufacturing_frontend
+  description: "Events Frontend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user1
+  system: manufacturing_system
+  consumesApis:
+    - manufacturing_events_api

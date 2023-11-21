@@ -1,0 +1,91 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: rh-one-system
+  tags:
+    - rh-one
+spec:
+  owner: rhdh  
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: rh-one_database
+  description: "Event Data"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
+spec:
+  type: database
+  owner: rhdh
+  system: rh-one-system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: events_s3
+  description: "Events S3 Bucket"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
+spec:
+  type: storage
+  owner: rhdh
+  system: rh-one-system
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: events_api
+  description: "Get Events API"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
+spec:
+  type: grpc
+  lifecycle: production
+  owner: rhdh
+  system: rh-one-system
+  definition: |
+    syntax = "proto3";
+    package myorg.mygrpcapi;
+    message MyRequest {
+      string query = 1;
+    }
+    message MyResponse {
+      string result = 1;
+    }
+    service MyGrpcApi {
+      rpc MyMethod (MyRequest) returns (MyResponse);
+    }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rh-one-backend
+  description: "Event Backend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: rhdh
+  system: rh-one-system
+  dependsOn:
+    - resource:rh-one_database
+    - resource:events_s3
+  providesApis:
+    - events_api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rh-one-frontend
+  description: "Events Frontend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: rhdh
+  system: rh-one-system
+  consumesApis:
+    - events_api

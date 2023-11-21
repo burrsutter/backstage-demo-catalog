@@ -1,0 +1,91 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: marketing_system
+  tags:
+    - events
+spec:
+  owner: user2
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: marketing_database
+  description: "Event Data"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
+spec:
+  type: database
+  owner: user2
+  system: marketing_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: marketing_events_s3
+  description: "Marketing events S3 Bucket"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
+spec:
+  type: storage
+  owner: user2
+  system: marketing_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: marketing_events_api
+  description: "Get Marketing Events API"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
+spec:
+  type: grpc
+  lifecycle: production
+  owner: user2
+  system: marketing_system
+  definition: |
+    syntax = "proto3";
+    package myorg.mygrpcapi;
+    message MyRequest {
+      string query = 1;
+    }
+    message MyResponse {
+      string result = 1;
+    }
+    service MyGrpcApi {
+      rpc MyMethod (MyRequest) returns (MyResponse);
+    }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: marketing-backend
+  description: "Marketing Events Backend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user2
+  system: marketing_system
+  dependsOn:
+    - resource:marketing_database
+    - resource:marketing_events_s3
+  providesApis:
+    - events_api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rh-one-frontend
+  description: "Events Frontend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user2
+  system: marketing_system
+  consumesApis:
+    - marketing_events_api

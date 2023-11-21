@@ -1,0 +1,91 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: accounting_system
+  tags:
+    - events
+spec:
+  owner: user3
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: accounting_database
+  description: "Event Data"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
+spec:
+  type: database
+  owner: user3
+  system: accounting_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: accounting_events_s3
+  description: "accounting events S3 Bucket"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
+spec:
+  type: storage
+  owner: user3
+  system: accounting_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: accounting_events_api
+  description: "Get accounting Events API"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
+spec:
+  type: grpc
+  lifecycle: production
+  owner: user3
+  system: accounting_system
+  definition: |
+    syntax = "proto3";
+    package myorg.mygrpcapi;
+    message MyRequest {
+      string query = 1;
+    }
+    message MyResponse {
+      string result = 1;
+    }
+    service MyGrpcApi {
+      rpc MyMethod (MyRequest) returns (MyResponse);
+    }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: accounting_backend
+  description: "accounting Events Backend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user3
+  system: accounting_system
+  dependsOn:
+    - resource:accounting_database
+    - resource:accounting_events_s3
+  providesApis:
+    - events_api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: accounting_frontend
+  description: "Events Frontend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user3
+  system: accounting_system
+  consumesApis:
+    - accounting_events_api

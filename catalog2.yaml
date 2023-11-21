@@ -60,7 +60,7 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: marketing-backend
+  name: marketing_backend
   description: "Marketing Events Backend Service"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
@@ -78,7 +78,7 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: rh-one-frontend
+  name: marketing_frontend
   description: "Events Frontend Service"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"

@@ -4,7 +4,8 @@ kind: System
 metadata:
   name: accounting_system
   tags:
-    - events
+    - accounting
+    - internal
 spec:
   owner: user3
 ---
@@ -12,7 +13,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: accounting_database
-  description: "Event Data"
+  description: "Accounting Data"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
 spec:
@@ -23,8 +24,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: accounting_events_s3
-  description: "accounting events S3 Bucket"
+  name: accounting_s3
+  description: "accounting S3 Bucket"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
 spec:
@@ -35,8 +36,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: accounting_events_api
-  description: "Get accounting Events API"
+  name: accounting_api
+  description: "Accounting API"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
 spec:
@@ -71,7 +72,7 @@ spec:
   system: accounting_system
   dependsOn:
     - resource:accounting_database
-    - resource:accounting_events_s3
+    - resource:accounting_s3
   providesApis:
     - events_api
 ---
@@ -79,7 +80,9 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: accounting_frontend
-  description: "Events Frontend Service"
+  description: "Accounting Frontend web"
+  tags:
+  - web
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
 spec:
@@ -88,4 +91,4 @@ spec:
   owner: user3
   system: accounting_system
   consumesApis:
-    - accounting_events_api
+    - accounting_api

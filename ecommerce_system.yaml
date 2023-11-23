@@ -352,7 +352,7 @@ spec:
   system: ecommerce_system
   dependsOn:
     - resource:ecommerce_database
-    - resource:ecommerce_events_s3
+    - resource:ecommerce_s3
   consumesApis:
     - checkout_api
     - payments_api

@@ -149,12 +149,12 @@ spec:
   dependsOn:
     - resource:customerweb_database
     - resource:customerweb_object
-  providesApis:
-    - customerweb_api
   consumesApis:
     - sso_api
     - preference_api
-    - recommendation_api    
+    - recommendation_api
+  providesApis:
+    - customerweb_api
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component

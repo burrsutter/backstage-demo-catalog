@@ -2,7 +2,7 @@
 
 Use the URL to the catalog1.yaml file 
 
-https://github.com/burrsutter/backstage-demo-catalog/blob/main/catalog1.yaml
+https://github.com/burrsutter/backstage-demo-catalog/blob/main/rh-one-system.yaml
 
 Register Component on the Create screen 
 

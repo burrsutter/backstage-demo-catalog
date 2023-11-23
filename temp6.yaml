@@ -46,7 +46,5 @@ spec:
   lifecycle: production
   owner: user2
   system: ecommerce_system
-  dependsOn:
-    - ecommerce_backend
   consumesApis:
     - ecommerce_api

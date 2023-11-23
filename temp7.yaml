@@ -1,0 +1,20 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ecommerce_backer
+  description: "ecommerce backer service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user4
+  system: ecommerce_system
+  dependsOn:
+    - resource:ecommerce_database
+    - resource:ecommerce_s3
+  consumesApis:
+    - sso_api
+  providesApis:
+    - ecommerce_api

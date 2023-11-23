@@ -365,20 +365,22 @@ spec:
     - customerweb_api    
   providesApis:
     - ecommerce_api
+
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ecommerce_frontend
-  description: "ecommerce Frontend web"
+  name: ecommerce_web
+  description: "ecommerce web"
+  tags:
+    - ecommerce
+    - frontend  
   annotations:
-    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
+    backstage.io/managed-by-location: url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml
 spec:
   type: service
   lifecycle: production
   owner: user2
   system: ecommerce_system
-  dependsOn: 
-   - ecommerce_backer
   consumesApis:
-    - ecommerce_api    
+    - ecommerce_api

@@ -4,6 +4,9 @@ kind: Component
 metadata:
   name: ecommerce_backend
   description: "ecommerce backend"
+  tags:
+    - ecommerce
+    - backend
   annotations:
     backstage.io/managed-by-location: url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml
 spec:
@@ -21,8 +24,11 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ecommerce_frontend
-  description: ecommerce Frontend web
+  name: ecommerce_web
+  description: "ecommerce web"
+  tags:
+    - ecommerce
+    - frontend  
   annotations:
     backstage.io/managed-by-location: url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml
 spec:

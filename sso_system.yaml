@@ -2,48 +2,72 @@
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  name: marketing_system
+  name: sso_system
   tags:
-    - events
+    - sso
 spec:
-  owner: user2
+  owner: user1
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: marketing_database
-  description: "Marketing Database"
+  name: sss_database
+  description: "sso Database"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
 spec:
   type: database
-  owner: user2
-  system: marketing_system
+  owner: user1
+  system: sso_system
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: marketing_s3
-  description: "Marketing S3 Bucket"
+  name: sso_s3
+  description: "sso S3 Bucket"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
 spec:
   type: storage
-  owner: user2
-  system: marketing_system
+  owner: user1
+  system: sso_system
+---  
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: sso_redis
+  description: "sso Redis"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/redis.yaml"
+spec:
+  type: storage
+  owner: user1
+  system: sso_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: sso_kafka
+  description: "sso Kafka"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/kafka.yaml"
+spec:
+  type: storage
+  owner: user1
+  system: sso_system  
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: marketing_events_api
-  description: "Get Marketing Events API"
+  name: sso_events_api
+  description: "Get sso Events API"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
 spec:
   type: grpc
   lifecycle: production
-  owner: user2
-  system: marketing_system
+  owner: user1
+  system: sso_system
   definition: |
     syntax = "proto3";
     package myorg.mygrpcapi;
@@ -60,32 +84,34 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: marketing_backend
-  description: "Marketing Events Backend Service"
+  name: sso_backend
+  description: "SSO Backend Service"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
 spec:
   type: service
   lifecycle: production
-  owner: user2
-  system: marketing_system
+  owner: user1
+  system: sso_system
   dependsOn:
-    - resource:marketing_database
-    - resource:marketing_events_s3
+    - resource:sso_database
+    - resource:sso_s3
+    - resource:sso_redis
+    - resource:sso_kafka
   providesApis:
-    - events_api
+    - sso_api
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: marketing_frontend
-  description: "Events Frontend Service"
+  name: sso_frontend
+  description: "SSO Frontend Service"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
 spec:
   type: service
   lifecycle: production
-  owner: user2
-  system: marketing_system
+  owner: user1
+  system: sso_system
   consumesApis:
-    - marketing_events_api
+    - sso_api

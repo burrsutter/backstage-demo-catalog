@@ -12,7 +12,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: manufacturing_database
-  description: "Event Data"
+  description: "Manufacturing Database"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
 spec:
@@ -23,8 +23,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: manufacturing_events_s3
-  description: "manufacturing events S3 Bucket"
+  name: manufacturing_s3
+  description: "manufacturing S3 Bucket"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
 spec:

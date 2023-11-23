@@ -12,7 +12,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: training_database
-  description: "Event Data"
+  description: "Training Database"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
 spec:
@@ -23,8 +23,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: training_events_s3
-  description: "training events S3 Bucket"
+  name: training_s3
+  description: "training S3 Bucket"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
 spec:

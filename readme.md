@@ -36,3 +36,5 @@ echo "\n" >> catalog_main.yaml
 cat training_system.yaml >> catalog_main.yaml
 echo "\n" >> catalog_main.yaml
 cat marketing_system.yaml >> catalog_main.yaml
+echo "\n" >> catalog_main.yaml
+cat ecommerce_system.yaml >> catalog_main.yaml

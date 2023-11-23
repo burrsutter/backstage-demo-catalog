@@ -337,6 +337,7 @@ spec:
   system: ecommerce_system
   providesApis:
     - email_api
+
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component

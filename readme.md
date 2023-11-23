@@ -28,6 +28,7 @@ https://backstage.io/docs/features/software-catalog/descriptor-format/
 
 # Maintenance of catalog-main.yaml
 
+```
 rm catalog_main.yaml
 cat sso_system.yaml >> catalog_main.yaml
 echo "\n" >> catalog_main.yaml
@@ -42,7 +43,7 @@ echo "\n" >> catalog_main.yaml
 cat finance_system.yaml >> catalog_main.yaml
 echo "\n" >> catalog_main.yaml
 cat accounting_system.yaml >> catalog_main.yaml
-
+```
 
 # Other Stuff
 

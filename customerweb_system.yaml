@@ -1,0 +1,206 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: customerweb_system
+  tags:
+    - web
+    - customer-facing
+    - ecommerce
+    - recommendations
+spec:
+  owner: user4
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: customerweb_database
+  description: "Customer web Database"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
+spec:
+  type: database
+  owner: user4
+  system: customerweb_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: customerweb_object
+  description: "customerweb object bucket"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
+spec:
+  type: storage
+  owner: user4
+  system: customerweb_system
+---  
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: customerweb_redis
+  description: "customerweb Redis"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/redis.yaml"
+spec:
+  type: storage
+  owner: user4
+  system: customerweb_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: customerweb_kafka
+  description: "customerweb Kafka"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/kafka.yaml"
+spec:
+  type: storage
+  owner: user4
+  system: customerweb_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: customerweb_api
+  description: "Get customerweb API"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
+spec:
+  type: grpc
+  lifecycle: production
+  owner: user4
+  system: customerweb_system
+  definition: |
+    syntax = "proto3";
+    package myorg.mygrpcapi;
+    message MyRequest {
+      string query = 1;
+    }
+    message MyResponse {
+      string result = 1;
+    }
+    service MyGrpcApi {
+      rpc MyMethod (MyRequest) returns (MyResponse);
+    }
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: preference_api
+  description: "Get preference API"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
+spec:
+  type: grpc
+  lifecycle: production
+  owner: user4
+  system: customerweb_system
+  definition: |
+    syntax = "proto3";
+    package myorg.mygrpcapi;
+    message MyRequest {
+      string query = 1;
+    }
+    message MyResponse {
+      string result = 1;
+    }
+    service MyGrpcApi {
+      rpc MyMethod (MyRequest) returns (MyResponse);
+    }    
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: recommendation_api
+  description: "Get recommendation API"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
+spec:
+  type: grpc
+  lifecycle: production
+  owner: user4
+  system: customerweb_system
+  definition: |
+    syntax = "proto3";
+    package myorg.mygrpcapi;
+    message MyRequest {
+      string query = 1;
+    }
+    message MyResponse {
+      string result = 1;
+    }
+    service MyGrpcApi {
+      rpc MyMethod (MyRequest) returns (MyResponse);
+    }    
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: customerweb_backend
+  description: "customerweb Backend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user4
+  system: customerweb_system
+  dependsOn:
+    - resource:customerweb_database
+    - resource:customerweb_object
+  providesApis:
+    - customerweb_api
+  consumesApis:
+    _ sso_api
+    - preference_api
+    - recommendation_api    
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: preference_backend
+  description: "preference Backend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user4
+  system: customerweb_system
+  dependsOn:
+    - resource:customerweb_redis
+  providesApis:
+    - preference_api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: recommendation_backend
+  description: "recommendation Backend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user4
+  system: customerweb_system
+  dependsOn:
+    - resource:customerweb_kafka
+  providesApis:
+    - recommendation_api    
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: customerweb_frontend
+  description: "Customer Frontend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user4
+  system: training_system
+  consumesApis:
+    - customerweb_api

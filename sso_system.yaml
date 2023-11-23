@@ -5,6 +5,8 @@ metadata:
   name: sso_system
   tags:
     - sso
+    - shared
+    - infrastructure
 spec:
   owner: user1
 ---

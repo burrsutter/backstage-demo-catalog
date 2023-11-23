@@ -870,6 +870,8 @@ spec:
   dependsOn:
     - resource:ecommerce_database
     - resource:ecommerce_s3
+    - sso_backend
+    - customerweb_backend
   consumesApis:
     - sso_api
     - checkout_api

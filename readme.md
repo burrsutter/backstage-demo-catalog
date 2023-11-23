@@ -1,5 +1,7 @@
 # Demo Catalog Entries
 
+This repository is to maintain Backstage Catalog entities for demo purposes.   
+
 Use the URL to the catalog_main.yaml file 
 
 https://github.com/burrsutter/backstage-demo-catalog/blob/main/catalog_main.yaml
@@ -19,6 +21,10 @@ Note: You can re-import the catalog_main.yaml in which case you will be presente
 ![4](/images/register-4.png)
 
 ![5](/images/register-5.png)
+
+# Tips
+
+https://backstage.io/docs/features/software-catalog/descriptor-format/
 
 # Maintenance of catalog-main.yaml
 

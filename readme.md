@@ -38,3 +38,10 @@ echo "\n" >> catalog_main.yaml
 cat marketing_system.yaml >> catalog_main.yaml
 echo "\n" >> catalog_main.yaml
 cat ecommerce_system.yaml >> catalog_main.yaml
+echo "\n" >> catalog_main.yaml
+cat finance_system.yaml >> catalog_main.yaml
+
+
+# Other Stuff
+
+Other systems might be: HR, IT, Sales, Lending, Legal

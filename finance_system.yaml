@@ -4,7 +4,7 @@ kind: System
 metadata:
   name: finance_system
   tags:
-    - events
+    - finance
 spec:
   owner: user2
 ---
@@ -12,7 +12,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: finance_database
-  description: "Event Data"
+  description: "Finance database"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
 spec:
@@ -23,8 +23,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: finance_events_s3
-  description: "finance events S3 Bucket"
+  name: finance_s3
+  description: "Finance S3 Bucket"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
 spec:
@@ -35,8 +35,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: finance_events_api
-  description: "Get finance Events API"
+  name: finance_api
+  description: "Get finance API"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
 spec:
@@ -61,7 +61,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: finance_backend
-  description: "finance Events Backend Service"
+  description: "Finance Backend Service"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
 spec:
@@ -71,15 +71,15 @@ spec:
   system: finance_system
   dependsOn:
     - resource:finance_database
-    - resource:finance_events_s3
+    - resource:finance_s3
   providesApis:
-    - events_api
+    - finance_api
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: finance_frontend
-  description: "Events Frontend Service"
+  description: "Finance Frontend web"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
 spec:
@@ -88,4 +88,4 @@ spec:
   owner: user2
   system: finance_system
   consumesApis:
-    - finance_events_api
+    - finance_api

@@ -901,3 +901,95 @@ spec:
   system: ecommerce_system
   consumesApis:
     - ecommerce_api
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: finance_system
+  tags:
+    - finance
+spec:
+  owner: user2
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: finance_database
+  description: "Finance database"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
+spec:
+  type: database
+  owner: user2
+  system: finance_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: finance_s3
+  description: "Finance S3 Bucket"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
+spec:
+  type: storage
+  owner: user2
+  system: finance_system
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: finance_api
+  description: "Get finance API"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
+spec:
+  type: grpc
+  lifecycle: production
+  owner: user2
+  system: finance_system
+  definition: |
+    syntax = "proto3";
+    package myorg.mygrpcapi;
+    message MyRequest {
+      string query = 1;
+    }
+    message MyResponse {
+      string result = 1;
+    }
+    service MyGrpcApi {
+      rpc MyMethod (MyRequest) returns (MyResponse);
+    }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: finance_backend
+  description: "Finance Backend Service"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user2
+  system: finance_system
+  dependsOn:
+    - resource:finance_database
+    - resource:finance_s3
+  providesApis:
+    - finance_api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: finance_frontend
+  description: "Finance Frontend web"
+  annotations:
+    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
+spec:
+  type: service
+  lifecycle: production
+  owner: user2
+  system: finance_system
+  consumesApis:
+    - finance_api

@@ -14,16 +14,6 @@ spec:
   dependsOn:
     - resource:ecommerce_database
     - resource:ecommerce_s3
-  consumesApis:
-    - checkout_api
-    - payments_api
-    - ads_api
-    - cart_api
-    - catalog_api
-    - shipping_api
-    - email_api
-    - sso_api
-    - customerweb_api
   providesApis:
     - ecommerce_api
 

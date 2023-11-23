@@ -1,11 +1,12 @@
 # Demo Catalog Entries
 
-Use the URL to the catalog-main.yaml file 
+Use the URL to the catalog_main.yaml file 
 
 https://github.com/burrsutter/backstage-demo-catalog/blob/main/catalog_main.yaml
 
+Register Component on the Create screen
 
-Register Component on the Create screen 
+Note: You can re-import the catalog_main.yaml in which case you will be presented with a "Refresh" button
 
 ![0](/images/register-0.png)
 

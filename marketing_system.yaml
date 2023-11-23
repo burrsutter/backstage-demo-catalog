@@ -62,6 +62,8 @@ kind: Component
 metadata:
   name: marketing_wordpress
   description: "Marketing Wordpress Service"
+  tags:
+    - wordpress
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
 spec:

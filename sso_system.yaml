@@ -88,6 +88,10 @@ kind: Component
 metadata:
   name: sso_backend
   description: "SSO Backend Service"
+  tags:
+    - sso
+    - shared
+    - backend
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
 spec:
@@ -108,6 +112,9 @@ kind: Component
 metadata:
   name: sso_frontend
   description: "SSO Frontend Service"
+  tags:
+    - sso
+    - shared
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
 spec:

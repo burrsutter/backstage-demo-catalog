@@ -4,7 +4,7 @@ kind: System
 metadata:
   name: marketing_system
   tags:
-    - events
+    - marketing
 spec:
   owner: user2
 ---
@@ -35,8 +35,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: marketing_events_api
-  description: "Get Marketing Events API"
+  name: marketing_api
+  description: "Get Marketing API"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
 spec:
@@ -60,8 +60,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: marketing_backend
-  description: "Marketing Events Backend Service"
+  name: marketing_wordpress
+  description: "Marketing Wordpress Service"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
 spec:
@@ -71,21 +71,7 @@ spec:
   system: marketing_system
   dependsOn:
     - resource:marketing_database
-    - resource:marketing_events_s3
+    - resource:marketing_s3
   providesApis:
-    - events_api
+    - marketing_api
 ---
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: marketing_frontend
-  description: "Events Frontend Service"
-  annotations:
-    backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
-spec:
-  type: service
-  lifecycle: production
-  owner: user2
-  system: marketing_system
-  consumesApis:
-    - marketing_events_api

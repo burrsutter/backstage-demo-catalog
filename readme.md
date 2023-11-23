@@ -2,7 +2,7 @@
 
 Use the URL to the catalog-main.yaml file 
 
-https://github.com/burrsutter/backstage-demo-catalog/blob/main/main.yaml
+https://github.com/burrsutter/backstage-demo-catalog/blob/main/catalog_main.yaml
 
 
 Register Component on the Create screen 
@@ -21,8 +21,11 @@ Register Component on the Create screen
 
 # Maintenance of catalog-main.yaml
 
+rm catalog_main.yaml
 cat sso_system.yaml >> catalog_main.yaml
 echo "\n" >> catalog_main.yaml
 cat customerweb_system.yaml >> catalog_main.yaml
 echo "\n" >> catalog_main.yaml
 cat training_system.yaml >> catalog_main.yaml
+echo "\n" >> catalog_main.yaml
+cat marketing_system.yaml >> catalog_main.yaml

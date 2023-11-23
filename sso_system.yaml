@@ -11,8 +11,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: sss_database
-  description: "sso Database"
+  name: sso_database
+  description: "SSO Database"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/database.yaml"
 spec:
@@ -24,7 +24,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: sso_s3
-  description: "sso S3 Bucket"
+  description: "SSO S3 Bucket"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
 spec:
@@ -59,8 +59,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: sso_events_api
-  description: "Get sso Events API"
+  name: sso_api
+  description: "Get SSO API"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
 spec:

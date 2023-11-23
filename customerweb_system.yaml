@@ -152,7 +152,7 @@ spec:
   providesApis:
     - customerweb_api
   consumesApis:
-    _ sso_api
+    - sso_api
     - preference_api
     - recommendation_api    
 ---

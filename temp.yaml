@@ -2,8 +2,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ecommerce_service
-  description: ecommerce service
+  name: ecommerce_backend
+  description: "ecommerce backend"
   annotations:
     backstage.io/managed-by-location: url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml
 spec:

@@ -47,6 +47,6 @@ spec:
   owner: user2
   system: ecommerce_system
   dependsOn:
-    - ecommerce_service
+    - ecommerce_backend
   consumesApis:
     - ecommerce_api

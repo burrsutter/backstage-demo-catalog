@@ -16,5 +16,13 @@ spec:
     - resource:ecommerce_s3
   consumesApis:
     - sso_api
+    - checkout_api
+    - payments_api
+    - ads_api
+    - cart_api
+    - catalog_api
+    - shipping_api
+    - email_api
+    - customerweb_api    
   providesApis:
     - ecommerce_api

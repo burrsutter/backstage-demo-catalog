@@ -4,7 +4,7 @@ kind: System
 metadata:
   name: training_system
   tags:
-    - events
+    - training
 spec:
   owner: user4
 ---
@@ -24,7 +24,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: training_s3
-  description: "training S3 Bucket"
+  description: "Training S3 Bucket"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/s3-bucket.yaml"
 spec:
@@ -35,8 +35,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: training_events_api
-  description: "Get training Events API"
+  name: training_api
+  description: "Training API"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-grpc-api.yaml"
 spec:
@@ -61,7 +61,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: training_backend
-  description: "training Events Backend Service"
+  description: "training Backend Service"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-backend.yaml"
 spec:
@@ -71,15 +71,17 @@ spec:
   system: training_system
   dependsOn:
     - resource:training_database
-    - resource:training_events_s3
+    - resource:training_s3
+  consumesApis:
+    - sso_api    
   providesApis:
-    - events_api
+    - training_api
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: training_frontend
-  description: "Events Frontend Service"
+  description: "Training Frontend Service"
   annotations:
     backstage.io/managed-by-location: "url:https://github.com/my-org/my-repo/blob/master/my-frontend.yaml"
 spec:
@@ -88,4 +90,4 @@ spec:
   owner: user4
   system: training_system
   consumesApis:
-    - training_events_api
+    - training_api

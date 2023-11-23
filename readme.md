@@ -1,8 +1,9 @@
 # Demo Catalog Entries
 
-Use the URL to the catalog1.yaml file 
+Use the URL to the catalog-main.yaml file 
 
-https://github.com/burrsutter/backstage-demo-catalog/blob/main/rh-one-system.yaml
+https://github.com/burrsutter/backstage-demo-catalog/blob/main/main.yaml
+
 
 Register Component on the Create screen 
 
@@ -18,3 +19,10 @@ Register Component on the Create screen
 
 ![5](/images/register-5.png)
 
+# Maintenance of catalog-main.yaml
+
+cat sso_system.yaml >> catalog_main.yaml
+echo "\n" >> catalog_main.yaml
+cat customerweb_system.yaml >> catalog_main.yaml
+echo "\n" >> catalog_main.yaml
+cat training_system.yaml >> catalog_main.yaml
